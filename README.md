@@ -24,86 +24,82 @@ Założenia
 
 Diagram Klas
 
-classDiagram
 class CinemaNetwork {
--String name
--List~Cinema~ cinemas
-+addCinema(Cinema)
-+getProgramme() List~Screening~
+- String name
+- List~Cinema~ cinemas
++ addCinema(Cinema)
++ getProgramme() List~Screening~
 }
 
-    class Cinema {
-        -String name
-        -String address
-        -List~Hall~ halls
-        -List~Screening~ screenings
-        +addHall(Hall)
-        +addScreening(Screening)
-        +getWeeklyProgramme() List~Screening~
-        +findMovie(String) List~Screening~
-    }
+class Cinema {
+- String name
+- String address
+- List~Hall~ halls
+- List~Screening~ screenings
++ addHall(Hall)
++ addScreening(Screening)
++ getWeeklyProgramme() List~Screening~
++ findMovie(String) List~Screening~
+}
 
-    class Hall {
-        -int number
-        -List~Seat~ seats
-        -boolean supports3D
-        +findSeat(String) Seat
-    }
+class Hall {
+- int number
+- List~Seat~ seats
+- boolean supports3D
++ findSeat(String) Seat
+}
 
-    class Screening {
-        -Movie movie
-        -Hall hall
-        -LocalDateTime dateTime
-        +reservePlaces(Customer, String...) Reservation
-        +buyTickets(String...) List~Ticket~
-        +calculatePrice(Seat) double
-    }
+class Screening {
+- Movie movie
+- Hall hall
+- LocalDateTime dateTime
++ reservePlaces(Customer, String...) Reservation
++ buyTickets(String...) List~Ticket~
++ calculatePrice(Seat) double
+}
 
-    class Movie {
-        -String title
-        -int duration
-        -boolean is3D
-    }
+class Movie {
+- String title
+- int duration
+- boolean is3D
+}
 
-    class Reservation {
-        -Customer customer
-        -List~Seat~ seats
-        -ReservationStatus status
-        +pay() List~Ticket~
-        +cancel()
-    }
+class Reservation {
+- Customer customer
+- List~Seat~ seats
+- ReservationStatus status
++ pay() List~Ticket~
++ cancel()
+}
 
-    class Ticket {
-        -Seat seat
-        -Screening screening
-        -double price
-    }
+class Ticket {
+- Seat seat
+- Screening screening
+- double price
+}
 
-    class Customer {
-        -String name
-        -String email
-        -List~Ticket~ tickets
-        +buy(Screening, String...) List~Ticket~
-    }
+class Customer {
+- String name
+- String email
+- List~Ticket~ tickets
++ buy(Screening, String...) List~Ticket~
+}
 
-    class Seat {
-        -String row
-        -int number
-        -SeatType type
-        +getCode() String
-    }
+class Seat {
+- String row
+- int number
+- SeatType type
++ getCode() String
+}
 
-    <<enumeration>> SeatType
-    <<enumeration>> ReservationStatus
-
-    CinemaNetwork "1" *-- "*" Cinema
-    Cinema "1" *-- "*" Hall
-    Cinema "1" *-- "*" Screening
-    Hall "1" *-- "*" Seat
-    Screening "1" o-- "1" Movie
-    Screening "1" o-- "1" Hall
-    Screening "1" *-- "*" Reservation
-    Reservation "1" o-- "0..1" Customer
-    Reservation "1" *-- "*" Seat
-    Customer "1" *-- "*" Ticket
-    Ticket "1" --> "1" Seat
+CinemaNetwork "1" *-- "*" Cinema
+Cinema "1" *-- "*" Hall
+Cinema "1" *-- "*" Screening
+Hall "1" *-- "*" Seat
+Screening "1" o-- "1" Movie
+Screening "1" o-- "1" Hall
+Screening "1" *-- "*" Reservation
+Reservation "1" o-- "0..1" Customer
+Reservation "1" *-- "*" Seat
+Customer "1" *-- "*" Ticket
+Ticket "1" --> "1" Seat
